@@ -1,65 +1,67 @@
-import {
-    toSlug,
-    capitalizeFirstWord,
-    capitalizeWords,
-    camelCase,
-    countWords,
-    removeNumbers,
-    onlyLetters,
-    removeExtraSpaces,
-    dotCase,
-    removeWords,
-} from '../src/index';
+import { modifyString } from '../src/index';
 
-describe('String Utility Functions', () => {
-    test('toSlug converts a string to a URL-friendly slug', () => {
-        expect(toSlug("Hello World!")).toBe("hello-world");
-        expect(toSlug("This_is_a_test")).toBe("this-is-a-test");
+describe('modifyString Function', () => {
+    test('toSlug operation', () => {
+        expect(modifyString({ str: "Hello World!", operation: 'toSlug' })).toBe("hello-world");
+        expect(modifyString({ str: "This_is_a_test", operation: 'toSlug' })).toBe("this-is-a-test");
     });
 
-    test('capitalizeFirstWord capitalizes the first character of the string', () => {
-        expect(capitalizeFirstWord(" hello world")).toBe("Hello world");
-        expect(capitalizeFirstWord("hello")).toBe("Hello");
+    test('capitalizeFirstWord operation', () => {
+        expect(modifyString({ str: " hello world", operation: 'capitalizeFirstWord' })).toBe("Hello world");
+        expect(modifyString({ str: "hello", operation: 'capitalizeFirstWord' })).toBe("Hello");
     });
 
-    test('capitalizeWords capitalizes the first character of each word', () => {
-        expect(capitalizeWords("hello world")).toBe("Hello World");
-        expect(capitalizeWords("hello world multiple words here")).toBe("Hello World Multiple Words Here");
+    test('capitalizeWords operation', () => {
+        expect(modifyString({ str: "hello world", operation: 'capitalizeWords' })).toBe("Hello World");
+        expect(modifyString({ str: "hello world multiple words here", operation: 'capitalizeWords' })).toBe("Hello World Multiple Words Here");
     });
 
-    test('camelCase converts a string to camelCase', () => {
-        expect(camelCase("hello world")).toBe("helloWorld");
-        expect(camelCase("hello world this is a test")).toBe("helloWorldThisIsATest");
+    test('camelCase operation', () => {
+        expect(modifyString({ str: "hello world", operation: 'camelCase' })).toBe("helloWorld");
+        expect(modifyString({ str: "hello world this is a test", operation: 'camelCase' })).toBe("helloWorldThisIsATest");
     });
 
-    test('countWords counts the number of words in a string', () => {
-        expect(countWords("hello world")).toBe(2);
-        expect(countWords("  hello   world  ")).toBe(2);
+    test('countWords operation', () => {
+        expect(modifyString({ str: "hello world", operation: 'countWords' })).toBe(2);
+        expect(modifyString({ str: "  hello   world  ", operation: 'countWords' })).toBe(2);
     });
 
-    test('removeNumbers removes all numeric characters from the string', () => {
-        expect(removeNumbers("hello123@world456")).toBe("hello@world");
-        expect(removeNumbers("no numbers")).toBe("no numbers");
+    test('removeNumbers operation', () => {
+        expect(modifyString({ str: "hello123@world456", operation: 'removeNumbers' })).toBe("hello@world");
+        expect(modifyString({ str: "no numbers", operation: 'removeNumbers' })).toBe("no numbers");
     });
 
-    test('onlyLetters removes all non-letter characters except spaces', () => {
-        expect(onlyLetters("hello123!@# world456")).toBe("hello world");
-        expect(onlyLetters("hello123 world!")).toBe("hello world");
+    test('onlyLetters operation', () => {
+        expect(modifyString({ str: "hello123!@# world456", operation: 'onlyLetters' })).toBe("hello world");
+        expect(modifyString({ str: "hello123 world!", operation: 'onlyLetters' })).toBe("hello world");
     });
 
-    test('removeExtraSpaces removes extra spaces from the string', () => {
-        expect(removeExtraSpaces("  hello   world  ")).toBe("hello world");
-        expect(removeExtraSpaces("hello   world")).toBe("hello world");
+    test('removeExtraSpaces operation', () => {
+        expect(modifyString({ str: "  hello   world  ", operation: 'removeExtraSpaces' })).toBe("hello world");
+        expect(modifyString({ str: "hello   world", operation: 'removeExtraSpaces' })).toBe("hello world");
     });
 
-    test('dotCase converts a string to dot.case', () => {
-        expect(dotCase("Hello World")).toBe("hello.world");
-        expect(dotCase("This is a test")).toBe("this.is.a.test");
+    test('dotCase operation', () => {
+        expect(modifyString({ str: "Hello World", operation: 'dotCase' })).toBe("hello.world");
+        expect(modifyString({ str: "This is a test", operation: 'dotCase' })).toBe("this.is.a.test");
     });
 
-    test('removeWords removes all strings in the array', () => {
-        expect(removeWords("hello my world", ["Hello"], true)).toBe("hello my world");
-        expect(removeWords("hello my world today!", ["Hello", "my" , "today!"], false)).toBe("world");
-        expect(removeWords("hello x my world today 1 !", ["Hello", "my" , "x", "1", "!"], false)).toBe("world today");
-    })
+    test('removeWords operation', () => {
+        expect(modifyString({ str: "hello my world", operation: 'removeWords', blacklist: ["Hello"], caseSensitive: true })).toBe("hello my world");
+        expect(modifyString({ str: "hello my world today!", operation: 'removeWords', blacklist: ["Hello", "my", "today!"], caseSensitive: false })).toBe("world");
+        expect(modifyString({ str: "hello x my world today 1 !", operation: 'removeWords', blacklist: ["Hello", "my", "x", "1", "!"], caseSensitive: false })).toBe("world today");
+    });
+
+    test('throws error for invalid operation', () => {
+        expect(() => modifyString({ str: "hello world", operation: 'invalidOperation' as any })).toThrow('Invalid operation');
+    });
+
+    test('throws error if blacklist is missing for removeWords', () => {
+        expect(() => modifyString({ str: "hello world", operation: 'removeWords' })).toThrow('Blacklist is required for removeWords operation');
+    });
+
+    test('throws error if input is not a string', () => {
+        expect(() => modifyString({ str: 123 as any, operation: 'toSlug' })).toThrow('Input must be a string');
+    });
 });
+

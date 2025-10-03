@@ -1,6 +1,6 @@
 {
   "name": "string-playground",
-  "version": "1.4.0",
+  "version": "2.0.0",
   "description": "String utility functions for clean and consistent text handling in JavaScript.",
   "main": "index.ts",
   "type": "module",
