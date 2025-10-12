@@ -1,4 +1,4 @@
-import { modifyString } from '../src/index';
+import modifyString from '../src/index';
 
 describe('modifyString Function', () => {
     test('toSlug operation', () => {
@@ -64,4 +64,3 @@ describe('modifyString Function', () => {
         expect(() => modifyString({ str: 123 as any, operation: 'toSlug' })).toThrow('Input must be a string');
     });
 });
-

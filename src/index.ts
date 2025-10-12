@@ -134,7 +134,7 @@ type ModifyString = {
  * @link https://github.com/PatrickNassar0/string-playground
  */
 
-export const modifyString = ({ str, operation, blacklist, caseSensitive }: ModifyString): string | number => {
+const modifyString = ({ str, operation, blacklist, caseSensitive }: ModifyString): string | number => {
     if (typeof str !== 'string') {
         throw new Error('Input must be a string');
     }
@@ -167,3 +167,5 @@ export const modifyString = ({ str, operation, blacklist, caseSensitive }: Modif
     }
 
 }
+
+export default modifyString;
