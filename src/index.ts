@@ -32,6 +32,14 @@ const camelCase = (str: string): string => {
         .replace(/\s+/g, ''); // Remove spaces
 };
 
+// Converts a string to snack_case by replacing spaces with under underscores
+const snackCase = (str: string): string => {
+    return str
+        .toLowerCase()
+        .trim()
+        .replace(/\s+/g, '_'); // Remove spaces
+};
+
 // Counts the number of words in a string by splitting it on spaces and filtering out empty entries.
 const countWords = (str: string): number => {
     return str
@@ -82,6 +90,7 @@ type ModifyString = {
     'capitalizeFirstWord' |
     'capitalizeWords' |
     'camelCase' |
+    'snackCase' |
     'countWords' |
     'removeNumbers' |
     'onlyLetters' |
@@ -94,18 +103,18 @@ type ModifyString = {
 }
 
 /**
- * 
+ *
  * Modifies a string based on the specified operation.
- * 
+ *
  * @param {string} str - The input string to be modified.
  * @param {string} operation - The operation to perform on the string.
  * @param {string[]} [blacklist] - An array of words to remove (required for removeWords operation).
  * @param {boolean} [caseSensitive=false] - Whether the removal of words should be case-sensitive (only for removeWords operation).
- * 
+ *
  * @returns {string | number} - The modified string or the word count, depending on the operation.
- * 
+ *
  * @throws {Error} - Throws an error if the input is not a string, if the operation is invalid, or if blacklist is required but not provided.
- * 
+ *
  * @description
  * Supported operations:
  * - toSlug: Converts the string to a URL-friendly slug.
@@ -118,7 +127,7 @@ type ModifyString = {
  * - removeExtraSpaces: Removes extra spaces, leaving only single spaces between words.
  * - dotCase: Converts the string to dot.case format.
  * - removeWords: Removes specified words from the string. Requires a blacklist array and an optional caseSensitive boolean (default is false).
- * 
+ *
  * @example
  * modifyString({ str: "Hello World!", operation: "toSlug" }); // "hello-world"
  * modifyString({ str: "hello world", operation: "capitalizeFirstWord" }); // "Hello world"
@@ -129,8 +138,8 @@ type ModifyString = {
  * modifyString({ str: "hello! world#", operation: "onlyLetters" }); // "hello world"
  * modifyString({ str: "hello    world", operation: "removeExtraSpaces" }); // "hello world"
  * modifyString({ str: "hello world", operation: "dotCase" }); // "hello.world"
- * modifyString({ str: "This is a test", operation: "removeWords", blacklist: ["is", "a"] }); // "This test" 
- * 
+ * modifyString({ str: "This is a test", operation: "removeWords", blacklist: ["is", "a"] }); // "This test"
+ *
  * @link https://github.com/PatrickNassar0/string-playground
  */
 
@@ -147,6 +156,8 @@ const modifyString = ({ str, operation, blacklist, caseSensitive }: ModifyString
             return capitalizeWords(str);
         case 'camelCase':
             return camelCase(str);
+        case 'snackCase':
+            return snackCase(str);
         case 'countWords':
             return countWords(str);
         case 'removeNumbers':

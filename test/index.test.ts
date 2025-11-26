@@ -21,6 +21,12 @@ describe('modifyString Function', () => {
         expect(modifyString({ str: "hello world this is a test", operation: 'camelCase' })).toBe("helloWorldThisIsATest");
     });
 
+    test('snackCase operation', () => {
+        expect(modifyString({ str: "hello world", operation: 'snackCase' })).toBe("hello_world");
+        expect(modifyString({ str: "hello world this is a test", operation: 'snackCase' })).toBe("hello_world_this_is_a_test");
+        expect(modifyString({ str: "hello    world", operation: 'snackCase' })).toBe("hello_world");
+    });
+
     test('countWords operation', () => {
         expect(modifyString({ str: "hello world", operation: 'countWords' })).toBe(2);
         expect(modifyString({ str: "  hello   world  ", operation: 'countWords' })).toBe(2);

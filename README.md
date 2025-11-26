@@ -6,7 +6,7 @@ String utility functions for clean and consistent text handling in TypeScript an
 
 ## 🚀 Features
 
-- Convert strings to `slug`, `camelCase`, or `dot.case`.
+- Convert strings to `slug`, `camelCase`, `snack_case` or `dot.case`.
 - Capitalize the first word or every word.
 - Clean the string form strings that are provided in the blacklist.
 - Remove numbers, symbols, or extra whitespace.
@@ -36,6 +36,7 @@ modifyString({ str: "Hello World!", operation: "toSlug" }); // "hello-world"
 modifyString({ str: "hello world", operation: "capitalizeFirstWord" }); // "Hello world"
 modifyString({ str: "hello world", operation: "capitalizeWords" }); // "Hello World"
 modifyString({ str: "hello world", operation: "camelCase" }); // "helloWorld"
+modifyString({ str: "hello world", operation: "snackCase" }); // "hello_world"
 modifyString({ str: "hello world", operation: "countWords" }); // 2
 modifyString({ str: "hello123 world456", operation: "removeNumbers" }); // "hello world"
 modifyString({ str: "hello! world#", operation: "onlyLetters" }); // "hello world"
